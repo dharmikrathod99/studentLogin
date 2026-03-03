@@ -1,4 +1,4 @@
-import Sidebar from "../components/Sidebar.jsx";
+import Sidebar from "../Components/Sidebar.jsx";
 
 const Dashboard = () => {
     const name = localStorage.getItem("name");

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Sidebar from "../components/Sidebar";
+import Sidebar from "../Components/Sidebar.jsx";
 import "../style/students.css";
 
 const Students = () => {
