@@ -16,7 +16,7 @@ const Students = () => {
     const fetchStudents = async () => {
         try {
             const res = await axios.get(
-                "http://localhost:5000/api/students/all",
+                "https://studentlogin-0n81.onrender.com/",
                 { headers: { Authorization: token } }
             );
             setStudents(res.data);
@@ -34,7 +34,7 @@ const Students = () => {
 
         try {
             await axios.post(
-                "http://localhost:5000/api/students/create",
+                "https://studentlogin-0n81.onrender.com/",
                 form,
                 { headers: { Authorization: token } }
             );
@@ -49,7 +49,7 @@ const Students = () => {
     const deleteStudent = async (id) => {
         try {
             await axios.delete(
-                `http://localhost:5000/api/students/delete/${id}`,
+                `https://studentlogin-0n81.onrender.com/${id}`,
                 { headers: { Authorization: token } }
             );
             fetchStudents();

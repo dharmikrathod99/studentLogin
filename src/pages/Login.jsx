@@ -13,7 +13,7 @@ const Login = () => {
 
         try {
             const res = await axios.post(
-                "http://localhost:5000/api/auth/login",
+                "https://studentlogin-0n81.onrender.com/",
                 { email, password }
             );
 
