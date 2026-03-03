@@ -13,7 +13,7 @@ const Login = () => {
 
         try {
             const res = await axios.post(
-                "https://studentlogin-0n81.onrender.com/",
+                "https://student-backend-df7f.onrender.com/",
                 { email, password }
             );
 
