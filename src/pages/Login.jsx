@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { API_BASE_URL } from "../config/api.js";
 import "../style/login.css";
 
 const Login = () => {
@@ -13,7 +14,7 @@ const Login = () => {
 
         try {
             const res = await axios.post(
-                "https://student-backend-df7f.onrender.com/api/auth/login",
+                `${API_BASE_URL}/api/auth/login`,
                 { email, password }
             );
 
@@ -21,7 +22,8 @@ const Login = () => {
             localStorage.setItem("name", res.data.name);
             navigate("/dashboard");
         } catch (error) {
-            alert("Invalid Credentials");
+            console.error("Login error:", error);
+            alert("Login Failed: " + (error.response?.data?.message || "Invalid credentials"));
         }
     };
 

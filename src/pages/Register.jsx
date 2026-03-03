@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import { API_BASE_URL } from "../config/api.js";
 import "../style/ragister.css";
 
 const Register = () => {
@@ -14,14 +15,15 @@ const Register = () => {
 
         try {
             await axios.post(
-                "https://student-backend-df7f.onrender.com/api/auth/register",
+                `${API_BASE_URL}/api/auth/register`,
                 { name, email, password }
             );
 
             alert("Registration Successful ");
             navigate("/");
         } catch (error) {
-            alert("Registration Failed ");
+            console.error("Registration error:", error);
+            alert("Registration Failed: " + (error.response?.data?.message || "Please try again"));
         }
     };
 

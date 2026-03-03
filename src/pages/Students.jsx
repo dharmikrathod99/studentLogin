@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "../Components/Sidebar.jsx";
+import { API_BASE_URL } from "../config/api.js";
 import "../style/students.css";
 
 const Students = () => {
@@ -18,7 +19,7 @@ const Students = () => {
     const fetchStudents = async () => {
         try {
             const res = await axios.get(
-                "http://localhost:5000/api/students/all",
+                `${API_BASE_URL}/api/students/all`,
                 { headers: { Authorization: token } }
             );
             setStudents(res.data);
@@ -37,7 +38,7 @@ const Students = () => {
         try {
             if (isEditing) {
                 await axios.put(
-                    `http://localhost:5000/api/students/update/${editingId}`,
+                    `${API_BASE_URL}/api/students/update/${editingId}`,
                     form,
                     { headers: { Authorization: token } }
                 );
@@ -45,7 +46,7 @@ const Students = () => {
                 setEditingId(null);
             } else {
                 await axios.post(
-                    "http://localhost:5000/api/students/create",
+                    `${API_BASE_URL}/api/students/create`,
                     form,
                     { headers: { Authorization: token } }
                 );
@@ -61,7 +62,7 @@ const Students = () => {
     const deleteStudent = async (id) => {
         try {
             await axios.delete(
-                `http://localhost:5000/api/students/delete/${id}`,
+                `${API_BASE_URL}/api/students/delete/${id}`,
                 { headers: { Authorization: token } }
             );
             fetchStudents();
