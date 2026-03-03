@@ -10,13 +10,15 @@ const Students = () => {
         email: "",
         course: "",
     });
+    const [editingId, setEditingId] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
 
     const token = localStorage.getItem("token");
 
     const fetchStudents = async () => {
         try {
             const res = await axios.get(
-                "https://student-backend-df7f.onrender.com/api/students/all",
+                "http://localhost:5000/api/students/all",
                 { headers: { Authorization: token } }
             );
             setStudents(res.data);
@@ -33,11 +35,21 @@ const Students = () => {
         e.preventDefault();
 
         try {
-            await axios.post(
-                "https://student-backend-df7f.onrender.com/api/students/create",
-                form,
-                { headers: { Authorization: token } }
-            );
+            if (isEditing) {
+                await axios.put(
+                    `http://localhost:5000/api/students/update/${editingId}`,
+                    form,
+                    { headers: { Authorization: token } }
+                );
+                setIsEditing(false);
+                setEditingId(null);
+            } else {
+                await axios.post(
+                    "http://localhost:5000/api/students/create",
+                    form,
+                    { headers: { Authorization: token } }
+                );
+            }
 
             setForm({ name: "", email: "", course: "" });
             fetchStudents();
@@ -49,7 +61,7 @@ const Students = () => {
     const deleteStudent = async (id) => {
         try {
             await axios.delete(
-                `https://student-backend-df7f.onrender.com/api/students/delete/${id}`,
+                `http://localhost:5000/api/students/delete/${id}`,
                 { headers: { Authorization: token } }
             );
             fetchStudents();
@@ -58,12 +70,28 @@ const Students = () => {
         }
     };
 
+    const editStudent = (student) => {
+        setForm({
+            name: student.name,
+            email: student.email,
+            course: student.course,
+        });
+        setEditingId(student._id);
+        setIsEditing(true);
+    };
+
+    const cancelEdit = () => {
+        setForm({ name: "", email: "", course: "" });
+        setEditingId(null);
+        setIsEditing(false);
+    };
+
     return (
         <div className="layout">
             <Sidebar />
 
             <div className="content">
-                <h2 className="page-title">Student Registration</h2>
+                <h2 className="page-title">{isEditing ? "Edit Student" : "Student Registration"}</h2>
 
                 {/* FORM CARD */}
                 <div className="form-card">
@@ -93,8 +121,13 @@ const Students = () => {
                             required
                         />
                         <button type="submit" className="btn-primary">
-                            Add Student
+                            {isEditing ? "Update Student" : "Add Student"}
                         </button>
+                        {isEditing && (
+                            <button type="button" className="btn-secondary" onClick={cancelEdit}>
+                                Cancel
+                            </button>
+                        )}
                     </form>
                 </div>
 
@@ -123,6 +156,12 @@ const Students = () => {
                                         <td>{s.email}</td>
                                         <td>{s.course}</td>
                                         <td>
+                                            <button
+                                                className="btn-edit"
+                                                onClick={() => editStudent(s)}
+                                            >
+                                                Edit
+                                            </button>
                                             <button
                                                 className="btn-delete"
                                                 onClick={() => deleteStudent(s._id)}
