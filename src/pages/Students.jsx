@@ -16,7 +16,7 @@ const Students = () => {
     const fetchStudents = async () => {
         try {
             const res = await axios.get(
-                "https://student-backend-df7f.onrender.com/",
+                "https://student-backend-df7f.onrender.com/api/students/all",
                 { headers: { Authorization: token } }
             );
             setStudents(res.data);
@@ -34,7 +34,7 @@ const Students = () => {
 
         try {
             await axios.post(
-                "https://student-backend-df7f.onrender.com/",
+                "https://student-backend-df7f.onrender.com/api/students/create",
                 form,
                 { headers: { Authorization: token } }
             );
@@ -49,7 +49,7 @@ const Students = () => {
     const deleteStudent = async (id) => {
         try {
             await axios.delete(
-                `https://student-backend-df7f.onrender.com/${id}`,
+                `https://student-backend-df7f.onrender.com/api/students/delete/${id}`,
                 { headers: { Authorization: token } }
             );
             fetchStudents();

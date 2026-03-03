@@ -14,7 +14,7 @@ const Register = () => {
 
         try {
             await axios.post(
-                "https://student-backend-df7f.onrender.com/",
+                "https://student-backend-df7f.onrender.com/api/auth/register",
                 { name, email, password }
             );
 

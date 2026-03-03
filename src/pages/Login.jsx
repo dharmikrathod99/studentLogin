@@ -13,7 +13,7 @@ const Login = () => {
 
         try {
             const res = await axios.post(
-                "https://student-backend-df7f.onrender.com/",
+                "https://student-backend-df7f.onrender.com/api/auth/login",
                 { email, password }
             );
 
